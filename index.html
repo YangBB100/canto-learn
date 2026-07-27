@@ -131,7 +131,7 @@
       <div class="mini"><div><b id="mLearn">0</b>已学</div><div><b id="mTotal">0</b>总卡</div><div><b id="mNew">0</b>待新学</div></div>
     </div>
 
-    <div class="footer"><button class="ghost" onclick="resetAll()">重置复习进度</button><br>跟到课堂行：第一课 九声 · 第二课 代词。上新课我加进来。</div>
+    <div class="footer"><button class="ghost" onclick="resetAll()">重置复习进度</button><br>跟到课堂行：第一课 九声 · 第二课 代词 · 第三课 否定词。</div>
   </div>
 
   <div id="study" class="study">
@@ -150,8 +150,8 @@
     <button id="abClose" title="关闭">✕</button>
   </div>
 
-<script src="cards.js?v=3"></script>
-<script src="lessons.js?v=3"></script>
+<script src="cards.js?v=4"></script>
+<script src="lessons.js?v=4"></script>
 <script>
 // ===== 存储 =====
 const SRS_KEY='cantoSrs.v2',META_KEY='cantoSrsMeta.v2',DAY=86400000,NEW_PER_DAY=12;
@@ -236,6 +236,12 @@ function startReview(){
   for(let i=due.length-1;i>0;i--){const j=(i*7+3)%(i+1);[due[i],due[j]]=[due[j],due[i]];}
   R={queue:due.concat(neu),pos:0,done:0,total:due.length+neu.length};
   showStudy('复习');document.getElementById('pbarWrap').style.display='';
+  R.queue.length?renderReviewCard():reviewDone();
+}
+function startDeckReview(deckIds,title){
+  const selected=ALL.filter(c=>deckIds.some(id=>c.id.startsWith(id+':')));
+  R={queue:selected,pos:0,done:0,total:selected.length};
+  showStudy(title);document.getElementById('pbarWrap').style.display='';
   R.queue.length?renderReviewCard():reviewDone();
 }
 function renderReviewCard(){

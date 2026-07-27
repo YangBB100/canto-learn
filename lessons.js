@@ -58,16 +58,16 @@ const LESSONS = [
 <h3>三、疑问代词</h3>
 <p><span class="au" data-a="乜嘢">乜嘢 mat1 je5</span> = 什么 = 口语 <span class="au" data-a="咩">咩 me1</span>（<b>最常用！</b>）　<span class="au" data-a="點樣">點樣 dim2 joeng2 怎么样</span>　<span class="au" data-a="點解">點解 dim2 gaai2 为什么</span></p>
 
-<div class="note">⚠️ <b>一个关键坑：係 vs 喺</b>　口语常都写「係」，但两个意思靠上下文分：<br><b>係 hai6 = 是</b>（呢個係咩 = 这个<b>是</b>什么）；<b>喺 hai2 = 在</b>（你喺呢度 = 你<b>在</b>这里）。下面例句 5 的「係」其实是喺（在）。</div>
+<div class="note">⚠️ <b>一个关键坑：係 vs 喺</b>　两个字发音和意思都不同：<br><b>係 hai6 = 是</b>（呢個係咩 = 这个<b>是</b>什么）；<b>喺 hai2 = 在</b>（你喺呢度 = 你<b>在</b>这里）。</div>
 
 <h3>四、例句（点粤语听）</h3>
 <table>
 <tr><th>粤语</th><th>普通话</th></tr>
-<tr><td><span class="au" data-a="cy01_1">我哋食咪啊</span></td><td>我们吃什么（咪=咩）</td></tr>
+<tr><td><span class="au" data-a="cy01_1">我哋食咩啊</span></td><td>我们吃什么（咩=什么）</td></tr>
 <tr><td><span class="au" data-a="cy01_2">你哋做緊咩啊</span></td><td>你们在做什么</td></tr>
 <tr><td><span class="au" data-a="cy01_3">佢哋去做咩啊</span></td><td>他们去做什么</td></tr>
 <tr><td><span class="au" data-a="cy01_4">呢個係咩啊</span></td><td>这个是什么</td></tr>
-<tr><td><span class="au" data-a="cy01_5">你係呢度做咩啊</span></td><td>你<b>在</b>这里做什么（係=喺）</td></tr>
+<tr><td><span class="au" data-a="cy01_5">你喺呢度做咩啊</span></td><td>你<b>在</b>这里做什么（喺=在）</td></tr>
 <tr><td><span class="au" data-a="c02_1">呢啲係咩啊</span></td><td>这些是什么</td></tr>
 <tr><td><span class="au" data-a="cy01_6">嗰個人係邊個</span></td><td>那个人是谁</td></tr>
 <tr><td><span class="au" data-a="c02_2">嗰度有個人</span></td><td>那里有个人</td></tr>
@@ -79,6 +79,53 @@ const LESSONS = [
 <tr><td><span class="au" data-a="cy01_10">你點樣啊</span></td><td>你怎么样</td></tr>
 <tr><td><span class="au" data-a="cy01_11">你點解噉講嘅</span></td><td>你为什么这么说</td></tr>
 </table>
+`
+},
+{
+  num:'第三课', title:'否定词', sub:'唔 · 冇 · 未 · 咪',
+  html:`
+<p>第三课学四个高频否定词：<b>唔 / 冇 / 未 / 咪</b>。它们不能互换；关键不是死背中文翻译，而是先判断：<b>一般不、过去没、还没，还是叫人别做</b>。</p>
+
+<h3>一、一眼选对</h3>
+<table>
+<tr><th>词</th><th>粤拼</th><th>什么时候用</th><th>教材例子</th></tr>
+<tr><td><b>唔</b></td><td>m4</td><td>一般的“不”</td><td>唔知、唔使</td></tr>
+<tr><td><b>冇</b></td><td>mou5</td><td>没有 / 过去没发生</td><td>冇意見、冇睇過</td></tr>
+<tr><td><b>未</b></td><td>mei6</td><td>还没、尚未</td><td>未睇完、未去過</td></tr>
+<tr><td><b>咪</b></td><td>mai5</td><td>别、不要（命令）</td><td>咪客氣、咪行咁快</td></tr>
+</table>
+
+<h3>二、同一个“食”，四种否定</h3>
+<div class="note warm">
+<span class="au" data-a="c03_cmp_m4"><b>我唔食</b> ngo5 m4 sik6</span>　= 我不吃 / 不会吃<br>
+<span class="au" data-a="c03_cmp_mou5"><b>我冇食</b> ngo5 mou5 sik6</span>　= 我没吃（过去没发生）<br>
+<span class="au" data-a="c03_cmp_mei6"><b>我未食</b> ngo5 mei6 sik6</span>　= 我还没吃（之后可能吃）<br>
+<span class="au" data-a="c03_cmp_mai5"><b>咪食</b> mai5 sik6</span>　= 别吃（命令）
+</div>
+
+<h3>三、咩 / 咪 / 係咪，别再混</h3>
+<table>
+<tr><th>词</th><th>粤拼</th><th>意思</th></tr>
+<tr><td><span class="au" data-a="咩">咩</span></td><td>me1</td><td>什么</td></tr>
+<tr><td><span class="au" data-a="c03_cmp_mai5">咪</span></td><td>mai5</td><td>别、不要</td></tr>
+<tr><td><span class="au" data-a="c03_hai6mai6">係咪</span></td><td>hai6 mai6</td><td>是不是（这里咪读 mai6）</td></tr>
+</table>
+<div class="note">⚠️ 第二课旧稿曾把“我们吃什么”写成「我哋食咪啊」，现已纠正为 <b>我哋食咩啊</b>。<b>咩 me1</b> 和 <b>咪 mai5</b> 不是同一个词。</div>
+
+<h3>四、教材例句（点粤语听）</h3>
+<table>
+<tr><th>粤语</th><th>普通话</th></tr>
+<tr><td><span class="au" data-a="c03_s01">我唔知</span></td><td>我不知道</td></tr>
+<tr><td><span class="au" data-a="c03_s02">你唔使客氣</span></td><td>你不用客气</td></tr>
+<tr><td><span class="au" data-a="c03_s03">我冇意見</span></td><td>我没有意见</td></tr>
+<tr><td><span class="au" data-a="c03_s04">我冇睇過</span></td><td>我没看过</td></tr>
+<tr><td><span class="au" data-a="c03_s05">你睇完未呀</span></td><td>你看完了吗</td></tr>
+<tr><td><span class="au" data-a="c03_s06">咪客氣</span></td><td>别客气</td></tr>
+<tr><td><span class="au" data-a="c03_s07">咪行咁快</span></td><td>别走这么快</td></tr>
+</table>
+
+<div class="note">🎯 <b>第三课目标</b>：看到一个情境，能在 2 秒内选出唔 / 冇 / 未 / 咪；能听懂并说出“我唔食 / 我冇食 / 我未食 / 咪食”。</div>
+<button class="showbtn" onclick="startDeckReview(['neg','negSent'],'第三课 · 否定词复习')">🔁 直接复习本课（12 张）</button>
 `
 },
 {

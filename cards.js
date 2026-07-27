@@ -70,13 +70,13 @@ const DECKS = [
   ]},
 
 // 第二课 · 代词例句
-{ id:'pronSent', num:'④', name:'第二课 · 代词例句', desc:'16 句，点 🔊 跟读（係=是 / 喺=在）',
+{ id:'pronSent', num:'④', name:'第二课 · 代词例句', desc:'15 张去重卡，点 🔊 跟读（係=是 / 喺=在）',
   cards:[
-    {hk:'我哋食咪啊',jy:'ngo5 dei6 sik6 me1 aa3',cn:'我们吃什么啊（咪=咩）',a:'cy01_1'},
+    {hk:'我哋食咩啊',jy:'ngo5 dei6 sik6 me1 aa3',cn:'我们吃什么啊（咩=什么）',a:'cy01_1'},
     {hk:'你哋做緊咩啊',jy:'nei5 dei6 zou6 gan2 me1 aa3',cn:'你们在做什么',a:'cy01_2'},
     {hk:'佢哋去做咩啊',jy:'keoi5 dei6 heoi3 zou6 me1 aa3',cn:'他们去做什么',a:'cy01_3'},
     {hk:'呢個係咩啊',jy:'ni1 go3 hai6 me1 aa3',cn:'这个是什么（係=是）',a:'cy01_4'},
-    {hk:'你係呢度做咩啊',jy:'nei5 hai2 ni1 dou6 zou6 me1 aa3',cn:'你在这里做什么（這個係=喺 hai2 在）',a:'cy01_5'},
+    {hk:'你喺呢度做咩啊',jy:'nei5 hai2 ni1 dou6 zou6 me1 aa3',cn:'你在这里做什么（喺 hai2=在）',a:'cy01_5'},
     {hk:'呢啲係咩啊',jy:'ni1 di1 hai6 me1 aa3',cn:'这些是什么',a:'c02_1'},
     {hk:'嗰個人係邊個',jy:'go2 go3 jan4 hai6 bin1 go3',cn:'那个人是谁',a:'cy01_6'},
     {hk:'嗰度有個人',jy:'go2 dou6 jau5 go3 jan4',cn:'那里有个人',a:'c02_2'},
@@ -87,6 +87,28 @@ const DECKS = [
     {hk:'呢個係乜嘢',jy:'ni1 go3 hai6 mat1 je5',cn:'这个是什么（书面些）',a:'cy01_9'},
     {hk:'你點樣啊',jy:'nei5 dim2 joeng2 aa3',cn:'你怎么样',a:'cy01_10'},
     {hk:'你點解噉講嘅',jy:'nei5 dim2 gaai2 gam2 gong2 ge3',cn:'你为什么这么说（噉=这么）',a:'cy01_11'},
+  ]},
+
+// 第三课 · 否定词四向对比
+{ id:'neg', num:'⑤', name:'第三课 · 否定词怎么选', desc:'唔 / 冇 / 未 / 咪 + 係咪',
+  cards:[
+    {hk:'我唔食',jy:'ngo5 m4 sik6',cn:'我不吃 / 不会吃 · 唔 m4 = 一般“不”',a:'c03_cmp_m4'},
+    {hk:'我冇食',jy:'ngo5 mou5 sik6',cn:'我没吃 · 冇 mou5 = 没有 / 过去没发生',a:'c03_cmp_mou5'},
+    {hk:'我未食',jy:'ngo5 mei6 sik6',cn:'我还没吃 · 未 mei6 = 还没 / 尚未',a:'c03_cmp_mei6'},
+    {hk:'咪食',jy:'mai5 sik6',cn:'别吃 · 咪 mai5 = 别 / 不要（命令）',a:'c03_cmp_mai5'},
+    {hk:'係咪',jy:'hai6 mai6',cn:'是不是 · 这里“咪”读 mai6；不是咩 me1',a:'c03_hai6mai6'},
+  ]},
+
+// 第三课 · 教材例句
+{ id:'negSent', num:'⑥', name:'第三课 · 否定词例句', desc:'7 句，把四个否定词放进语境',
+  cards:[
+    {hk:'我唔知',jy:'ngo5 m4 zi1',cn:'我不知道',a:'c03_s01'},
+    {hk:'你唔使客氣',jy:'nei5 m4 sai2 haak3 hei3',cn:'你不用客气',a:'c03_s02'},
+    {hk:'我冇意見',jy:'ngo5 mou5 ji3 gin3',cn:'我没有意见',a:'c03_s03'},
+    {hk:'我冇睇過',jy:'ngo5 mou5 tai2 gwo3',cn:'我没看过',a:'c03_s04'},
+    {hk:'你睇完未呀',jy:'nei5 tai2 jyun4 mei6 aa3',cn:'你看完了吗',a:'c03_s05'},
+    {hk:'咪客氣',jy:'mai5 haak3 hei3',cn:'别客气',a:'c03_s06'},
+    {hk:'咪行咁快',jy:'mai5 haang4 gam3 faai3',cn:'别走这么快',a:'c03_s07'},
   ]},
 
 ];
