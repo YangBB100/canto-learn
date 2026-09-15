@@ -1,0 +1,25 @@
+{
+  "name": "粤语声调台",
+  "short_name": "粤语声调",
+  "description": "第一课：粤拼、六调、入声与即时辨音练习。",
+  "lang": "yue-Hant-HK",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4efe4",
+  "theme_color": "#101a26",
+  "icons": [
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
