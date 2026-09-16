@@ -17,8 +17,8 @@
       // Private browsing or strict storage settings may disable persistence.
     }
   };
-  const toneNames = Object.fromEntries(course.tones.map((tone) => [tone.tone, tone.name]));
-  const toneCues = Object.fromEntries(course.tones.map((tone) => [tone.tone, tone.cue]));
+  const toneNames = Object.fromEntries((course.tones || []).map((tone) => [tone.tone, tone.name]));
+  const toneCues = Object.fromEntries((course.tones || []).map((tone) => [tone.tone, tone.cue]));
 
   const escapeHtml = (value) => String(value)
     .replaceAll("&", "&amp;")
@@ -31,6 +31,7 @@
   const audioCache = new Map();
   let activeAudio = null;
   let activeElement = null;
+  let lastTrigger = null;
   let currentRequest = null;
   let sequenceIndex = 0;
   let remainingRuns = 0;
@@ -130,6 +131,7 @@
     dockLabel.textContent = label;
     audioDock.hidden = false;
     document.body.classList.add("audio-open");
+    lastTrigger = sourceElement;
     markPlaying(sourceElement);
     playCurrentKey();
   }
@@ -155,17 +157,20 @@
     playGeneration += 1;
     sequenceIndex = 0;
     remainingRuns = repeatCount;
-    markPlaying(activeElement);
+    markPlaying(lastTrigger);
     playCurrentKey();
   }
 
   function closeDock() {
+    const returnFocusTo = lastTrigger;
     playGeneration += 1;
     stopActiveAudio();
     currentRequest = null;
     audioDock.hidden = true;
     document.body.classList.remove("audio-open");
     clearPlayingState();
+    if (returnFocusTo?.isConnected) returnFocusTo.focus({ preventScroll: true });
+    lastTrigger = null;
   }
 
   document.addEventListener("click", (event) => {
@@ -195,6 +200,15 @@
     });
   });
 
+  document.addEventListener("focusin", (event) => {
+    if (audioDock.hidden || audioDock.contains(event.target) || !window.matchMedia("(max-width: 620px)").matches) return;
+    const targetRect = event.target.getBoundingClientRect();
+    const dockRect = audioDock.getBoundingClientRect();
+    if (targetRect.bottom > dockRect.top - 12 || targetRect.top < 0) {
+      event.target.scrollIntoView({ block: "center", behavior: "instant" });
+    }
+  });
+
   function contourSvg(contour) {
     const y = (level) => 57 - level * 10;
     return `
@@ -210,10 +224,169 @@
     const label = `${item.char}，${item.contextualJyutping || item.jyutping}`;
     const jyutping = item.contextualJyutping || item.jyutping;
     const audio = item.charAudio || item.audio;
+    const title = item.note ? ` title="${escapeHtml(item.note)}"` : "";
     return `
-      <button class="${className}" type="button" data-audio="${escapeHtml(audio)}" data-label="${escapeHtml(label)}" aria-label="播放 ${escapeHtml(label)}">
+      <button class="${className}" type="button" data-audio="${escapeHtml(audio)}" data-label="${escapeHtml(label)}" aria-label="播放 ${escapeHtml(label)}"${title}>
         <ruby><span class="token-char">${escapeHtml(item.char)}</span><rt>${escapeHtml(jyutping)}</rt></ruby>
       </button>`;
+  }
+
+  function phraseButton(item, className = "phrase-chip") {
+    return `
+      <button class="${className}" type="button" data-audio="${escapeHtml(item.audio)}" data-label="${escapeHtml(item.text)}，${escapeHtml(item.jyutping)}" aria-label="播放 ${escapeHtml(item.text)}，${escapeHtml(item.jyutping)}">
+        <span class="phrase-text">${escapeHtml(item.text)}</span>
+        <span class="phrase-jyutping">${escapeHtml(item.jyutping)}</span>
+        ${item.meaning ? `<span class="phrase-meaning">${escapeHtml(item.meaning)}</span>` : ""}
+      </button>`;
+  }
+
+  function phraseCard(item, className = "phrase-chip") {
+    const tokens = Array.isArray(item.tokens) && item.tokens.length > 1
+      ? `<div class="phrase-token-row" aria-label="${escapeHtml(item.text)}逐字发音">${item.tokens.map((part) => tokenButton(part)).join("")}</div>`
+      : "";
+    const dark = className.includes("phrase-chip-dark") ? " phrase-card-dark" : "";
+    return `<div class="phrase-card${dark}">${phraseButton(item, className)}${tokens}</div>`;
+  }
+
+  function lexicalButton(item) {
+    const label = `${item.char}，${item.contextualJyutping}`;
+    return `
+      <button class="lexical-button" type="button" data-audio="${escapeHtml(item.charAudio)}" data-label="${escapeHtml(label)}" aria-label="播放 ${escapeHtml(label)}">
+        <ruby><span>${escapeHtml(item.char)}</span><rt>${escapeHtml(item.contextualJyutping)}</rt></ruby>
+        <small>${escapeHtml(item.meaning)}</small>
+      </button>`;
+  }
+
+  function renderSentenceRow(item, compact = false) {
+    return `
+      <article class="sentence-row${compact ? " sentence-row-compact" : ""}" data-sentence-id="${escapeHtml(item.id)}">
+        <div class="sentence-copy">
+          <h4>${escapeHtml(item.text)}</h4>
+          <p>${escapeHtml(item.meaning)}</p>
+          ${item.sourceOriginal ? `<p class="sentence-source"><strong>课堂原写：</strong>${escapeHtml(item.sourceOriginal)}</p>` : ""}
+        </div>
+        <button class="sentence-play" type="button" data-audio="${escapeHtml(item.sentenceAudio)}" data-label="整句：${escapeHtml(item.text)}" aria-label="播放整句 ${escapeHtml(item.text)}">
+          <span aria-hidden="true">▶</span><span>整句</span>
+        </button>
+        <div class="sentence-tokens" aria-label="逐字发音">
+          ${item.tokens.map((part) => tokenButton(part)).join("")}
+        </div>
+      </article>`;
+  }
+
+  function renderLessonTwo() {
+    byId("pronounBuilder").innerHTML = course.pronouns.map((pair) => `
+      <article class="pronoun-row">
+        ${phraseCard(pair.singular)}
+        <span class="builder-plus" aria-hidden="true">+ 哋 dei6 →</span>
+        ${phraseCard(pair.plural)}
+      </article>`).join("");
+
+    const prefixes = course.demonstrativeParts.prefixes.map((item) => lexicalButton(item)).join("");
+    const suffixes = course.demonstrativeParts.suffixes.map((item) => lexicalButton(item)).join("");
+    byId("demonstrativeParts").innerHTML = `
+      <div><p class="micro-label">先选范围</p><div class="lexical-set">${prefixes}</div></div>
+      <span class="builder-cross" aria-hidden="true">×</span>
+      <div><p class="micro-label">再选对象</p><div class="lexical-set">${suffixes}</div></div>`;
+    byId("demonstrativeGrid").innerHTML = course.demonstratives.map((item) => phraseCard(item)).join("");
+    byId("questionWordGrid").innerHTML = course.questionExpressions.map((item) => phraseCard(item)).join("");
+
+    byId("grammarContrasts").innerHTML = course.contrasts.map((item) => `
+      <article class="grammar-contrast">
+        <div class="contrast-heading"><span>${escapeHtml(item.cue)}</span><h3>${escapeHtml(item.title)}</h3></div>
+        <div class="grammar-pair">
+          ${phraseCard(item.left, "phrase-chip phrase-chip-dark")}
+          <span class="contrast-vs" aria-hidden="true">vs.</span>
+          ${phraseCard(item.right, "phrase-chip phrase-chip-dark")}
+        </div>
+        <p>${escapeHtml(item.note)}</p>
+      </article>`).join("");
+
+    byId("sentenceGroups").innerHTML = course.sentenceGroups.map((group, index) => `
+      <details class="sentence-group" id="${escapeHtml(group.id)}">
+        <summary>
+          <span class="sentence-group-heading">
+          <span class="micro-label">句组 ${String(index + 1).padStart(2, "0")}</span>
+          <strong>${escapeHtml(group.title)}</strong>
+          <small>${escapeHtml(group.description)}</small>
+          </span>
+          <b>${group.sentences.length} 句</b>
+          <i aria-hidden="true">＋</i>
+        </summary>
+        <div class="sentence-group-body">
+          <h3 class="sr-only">${escapeHtml(group.title)}</h3>
+          ${group.sentences.map((item) => renderSentenceRow(item)).join("")}
+        </div>
+      </details>`).join("");
+
+    byId("negativeGroups").innerHTML = course.negativeWords.map((group) => `
+      <details class="negative-group" id="negative-${escapeHtml(group.word.contextualJyutping)}">
+        <summary>
+          <span class="negative-summary-word">${escapeHtml(group.word.char)} <small>${escapeHtml(group.word.contextualJyutping)}</small></span>
+          <span>${escapeHtml(group.word.meaning)}</span>
+          <i aria-hidden="true">＋</i>
+        </summary>
+        <div class="negative-group-body">
+          <h3 class="sr-only">${escapeHtml(group.word.char)} ${escapeHtml(group.word.contextualJyutping)}：${escapeHtml(group.word.meaning)}</h3>
+          <header>
+          ${tokenButton(group.word, "negative-word")}
+          <p>${escapeHtml(group.word.meaning)}</p>
+          </header>
+          <div>${group.examples.map((item) => renderSentenceRow(item, true)).join("")}</div>
+        </div>
+      </details>`).join("");
+
+    byId("extraWords").innerHTML = course.extraWords.map((item) => phraseCard(item, "phrase-chip phrase-chip-dark")).join("");
+  }
+
+  function setupLessonNavigation() {
+    const modules = [...document.querySelectorAll("[data-lesson-module]")];
+    const outlineLinks = [...document.querySelectorAll("[data-module-link]")];
+    const outline = byId("course-outline");
+    const completion = document.querySelector("[data-lesson-completion]");
+
+    function activateFromHash({ scroll = true } = {}) {
+      const targetId = decodeURIComponent(location.hash.slice(1));
+      const target = targetId ? byId(targetId) : null;
+      const module = target?.matches("[data-lesson-module]") ? target : target?.closest("[data-lesson-module]");
+
+      modules.forEach((item) => {
+        item.hidden = item !== module;
+      });
+      if (outline) outline.hidden = Boolean(module);
+      if (completion) completion.hidden = !module;
+      outlineLinks.forEach((link) => {
+        const linkTarget = byId(decodeURIComponent(link.hash.slice(1)));
+        if (linkTarget && linkTarget === target) link.setAttribute("aria-current", "location");
+        else link.removeAttribute("aria-current");
+      });
+
+      if (target?.tagName === "DETAILS") target.open = true;
+      const focusTarget = target?.tagName === "DETAILS"
+        ? target.querySelector("summary")
+        : module
+          ? module.querySelector("h2")
+          : target === outline
+            ? outline.querySelector("h2")
+            : null;
+      if (focusTarget && focusTarget.tagName !== "SUMMARY") focusTarget.setAttribute("tabindex", "-1");
+      if (target || focusTarget) {
+        window.requestAnimationFrame(() => {
+          if (scroll && target) target.scrollIntoView({ block: "start", behavior: "auto" });
+          focusTarget?.focus({ preventScroll: true });
+        });
+      }
+    }
+
+    document.addEventListener("click", (event) => {
+      const link = event.target.closest("[data-module-link], .module-back");
+      if (!link || !link.hash) return;
+      event.preventDefault();
+      if (location.hash === link.hash) activateFromHash();
+      else location.hash = link.hash;
+    });
+    window.addEventListener("hashchange", () => activateFromHash());
+    activateFromHash({ scroll: Boolean(location.hash) });
   }
 
   function renderTones() {
@@ -416,25 +589,31 @@
     renderLastBaseline();
   }
 
-  byId("startQuiz").addEventListener("click", startQuiz);
-  byId("answerGrid").addEventListener("click", (event) => {
-    const button = event.target.closest("[data-answer]");
-    if (button) answerQuestion(Number(button.dataset.answer));
-  });
-  byId("nextQuestion").addEventListener("click", () => {
-    if (quizState.index >= quizState.queue.length - 1) {
-      finishQuiz();
-      return;
-    }
-    quizState.index += 1;
-    renderQuestion();
-  });
+  if (course.meta.id === "lesson-01-pronunciation") {
+    byId("startQuiz").addEventListener("click", startQuiz);
+    byId("answerGrid").addEventListener("click", (event) => {
+      const button = event.target.closest("[data-answer]");
+      if (button) answerQuestion(Number(button.dataset.answer));
+    });
+    byId("nextQuestion").addEventListener("click", () => {
+      if (quizState.index >= quizState.queue.length - 1) {
+        finishQuiz();
+        return;
+      }
+      quizState.index += 1;
+      renderQuestion();
+    });
 
-  renderTones();
-  renderContrasts();
-  renderCheckedTones();
-  renderSoundGroups();
-  renderLastBaseline();
+    renderTones();
+    renderContrasts();
+    renderCheckedTones();
+    renderSoundGroups();
+    renderLastBaseline();
+    setupLessonNavigation();
+  } else if (course.meta.id === "lesson-02-pronouns-questions") {
+    renderLessonTwo();
+    setupLessonNavigation();
+  }
 
   if ("serviceWorker" in navigator && location.protocol !== "file:") {
     window.addEventListener("load", () => {

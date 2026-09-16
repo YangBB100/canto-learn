@@ -1,7 +1,7 @@
 {
-  "name": "粤语声调台",
-  "short_name": "粤语声调",
-  "description": "第一课：粤拼、六调、入声与即时辨音练习。",
+  "name": "粤语练习台",
+  "short_name": "粤语练习",
+  "description": "手机粤语课：逐字粤拼点读、自然整句音频与发音练习。",
   "lang": "yue-Hant-HK",
   "start_url": "./",
   "scope": "./",

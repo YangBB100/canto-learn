@@ -24,6 +24,16 @@
   display: none !important;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 76px;
@@ -144,6 +154,35 @@ a {
   color: rgba(255, 255, 255, 0.74);
   font-size: 12px;
   letter-spacing: 0.08em;
+}
+
+.lesson-switcher {
+  display: inline-flex;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+}
+
+.lesson-switcher a {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 14px;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+}
+
+.lesson-switcher a + a {
+  border-left: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.lesson-switcher a[aria-current="page"] {
+  color: var(--ink);
+  background: var(--yellow);
 }
 
 .hero-copy {
@@ -1100,6 +1139,881 @@ a {
   opacity: 1;
 }
 
+/* 第二课：代词与问句 */
+
+.hero-lesson-two::before {
+  content: "2";
+}
+
+.hero-lesson-two .hero-copy {
+  padding-top: clamp(72px, 11vh, 112px);
+}
+
+.hero-lexicon {
+  position: absolute;
+  right: max(20px, calc((100% - min(1180px, calc(100% - 40px))) / 2));
+  bottom: 54px;
+  z-index: 1;
+  display: flex;
+  gap: clamp(8px, 1.5vw, 18px);
+}
+
+.hero-lexicon > span {
+  display: grid;
+  width: clamp(104px, 11vw, 140px);
+  min-height: 132px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.17);
+  border-radius: 50% 50% 12px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 12px;
+  text-align: center;
+}
+
+.hero-lexicon b {
+  color: var(--yellow);
+  font: 600 clamp(48px, 6vw, 72px) / 0.95 Georgia, "Songti SC", serif;
+}
+
+.hero-lexicon small {
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 11px;
+  font-weight: 750;
+}
+
+.pronoun-builder {
+  border-top: 1px solid var(--line);
+}
+
+.pronoun-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 22px;
+  border-bottom: 1px solid var(--line);
+  padding: 22px 0;
+}
+
+.builder-plus,
+.builder-cross {
+  color: var(--red-dark);
+  font: italic 16px Georgia, serif;
+  white-space: nowrap;
+}
+
+.phrase-chip {
+  display: grid;
+  min-width: 0;
+  min-height: 116px;
+  align-content: center;
+  justify-items: start;
+  gap: 2px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  color: var(--ink);
+  background: var(--paper-bright);
+  padding: 17px 20px;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 150ms ease, border-color 150ms ease, background 150ms ease;
+}
+
+.phrase-card {
+  display: grid;
+  min-width: 0;
+  align-self: stretch;
+  gap: 8px;
+}
+
+.phrase-card > .phrase-chip {
+  width: 100%;
+}
+
+.phrase-token-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(48px, 1fr));
+  gap: 6px;
+}
+
+.phrase-token-row .token-button {
+  min-width: 0;
+  min-height: 52px;
+  padding: 6px;
+}
+
+.phrase-token-row .token-char {
+  font-size: 21px;
+}
+
+.phrase-token-row .token-button rt {
+  font-size: 10px;
+}
+
+.phrase-card-dark .token-button {
+  color: var(--white);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.phrase-card-dark .token-button rt {
+  color: var(--yellow);
+}
+
+.phrase-chip:hover {
+  border-color: var(--red);
+}
+
+.phrase-chip:active,
+.lexical-button:active,
+.sentence-play:active,
+.negative-word:active {
+  transform: scale(0.975);
+}
+
+.phrase-chip.is-playing,
+.lexical-button.is-playing,
+.sentence-play.is-playing,
+.negative-word.is-playing {
+  color: var(--white);
+  border-color: var(--red-dark);
+  background: var(--red-dark);
+}
+
+.phrase-text {
+  font-family: Georgia, "Songti SC", serif;
+  font-size: 34px;
+  font-weight: 650;
+  line-height: 1.1;
+}
+
+.phrase-jyutping {
+  color: var(--red-dark);
+  font-size: 13px;
+  font-weight: 850;
+}
+
+.phrase-meaning {
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.phrase-chip.is-playing .phrase-jyutping,
+.phrase-chip.is-playing .phrase-meaning,
+.lexical-button.is-playing small {
+  color: var(--yellow);
+}
+
+.correction-strip {
+  margin-top: 42px;
+  border-left: 5px solid var(--red);
+  background: var(--paper-bright);
+  padding: 24px clamp(20px, 4vw, 42px);
+}
+
+.correction-strip > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 28px;
+  margin-top: 14px;
+}
+
+.correction-strip span {
+  font-size: 14px;
+}
+
+.correction-strip del {
+  color: var(--muted);
+}
+
+.demonstrative-parts {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 24px;
+  border-block: 1px solid rgba(16, 26, 38, 0.2);
+  padding: 26px 0;
+}
+
+.demonstrative-parts .micro-label {
+  margin-bottom: 10px;
+}
+
+.lexical-set {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.lexical-button {
+  display: grid;
+  min-width: 0;
+  min-height: 92px;
+  place-items: center;
+  border: 1px solid rgba(16, 26, 38, 0.2);
+  border-radius: 14px;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.28);
+  padding: 10px;
+  cursor: pointer;
+}
+
+.lexical-button ruby {
+  ruby-position: over;
+}
+
+.lexical-button ruby span {
+  font-family: Georgia, "Songti SC", serif;
+  font-size: 30px;
+  font-weight: 650;
+}
+
+.lexical-button rt {
+  color: var(--red-dark);
+  font-size: 11px;
+  font-weight: 850;
+}
+
+.lexical-button small {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.demonstrative-grid,
+.question-word-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 26px;
+}
+
+.question-word-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 0;
+}
+
+.grammar-contrasts {
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.grammar-contrast {
+  display: grid;
+  grid-template-columns: minmax(120px, 0.45fr) minmax(320px, 1.2fr) minmax(240px, 0.8fr);
+  align-items: center;
+  gap: 28px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+  padding: 26px 0;
+}
+
+.contrast-heading span {
+  color: rgba(255, 255, 255, 0.48);
+  font-size: 11px;
+  font-weight: 750;
+}
+
+.contrast-heading h3 {
+  margin: 2px 0 0;
+  color: var(--yellow);
+  font-size: 20px;
+}
+
+.grammar-pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+}
+
+.phrase-chip-dark {
+  min-height: 108px;
+  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.phrase-chip-dark .phrase-jyutping {
+  color: var(--yellow);
+}
+
+.phrase-chip-dark .phrase-meaning {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.grammar-contrast > p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 13px;
+}
+
+.sentence-groups {
+  border-top: 1px solid var(--line);
+}
+
+.sentence-group {
+  border-bottom: 1px solid var(--line);
+  padding: 0;
+  scroll-margin-top: 74px;
+}
+
+.sentence-group > summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto 36px;
+  align-items: center;
+  gap: 18px;
+  min-height: 116px;
+  padding: 24px 0;
+  cursor: pointer;
+  list-style: none;
+}
+
+.sentence-group > summary::-webkit-details-marker,
+.negative-group > summary::-webkit-details-marker {
+  display: none;
+}
+
+.sentence-group-heading,
+.sentence-group-heading > * {
+  display: block;
+}
+
+.sentence-group-heading strong {
+  margin-top: 7px;
+  font: 600 27px/1.12 Georgia, "Songti SC", serif;
+}
+
+.sentence-group-heading small {
+  margin-top: 7px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.sentence-group > summary > b {
+  color: var(--red-dark);
+  font-size: 12px;
+}
+
+.sentence-group > summary > i,
+.negative-group > summary > i {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--red-dark);
+  font-style: normal;
+  transition: transform 150ms ease;
+}
+
+.sentence-group[open] > summary > i,
+.negative-group[open] > summary > i {
+  transform: rotate(45deg);
+}
+
+.sentence-group-body {
+  max-width: 860px;
+  margin-left: auto;
+  padding: 4px 0 42px;
+}
+
+.sentence-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 14px 18px;
+  border-top: 1px solid var(--line);
+  padding: 24px 0 27px;
+}
+
+.sentence-row:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.sentence-copy h4 {
+  margin: 0;
+  font-family: Georgia, "Songti SC", serif;
+  font-size: clamp(22px, 3vw, 31px);
+  font-weight: 650;
+  line-height: 1.2;
+}
+
+.sentence-copy p {
+  margin: 7px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.sentence-copy .sentence-source {
+  margin-top: 9px;
+  border-left: 3px solid var(--yellow);
+  color: #6b5c3b;
+  padding-left: 9px;
+  font-size: 11px;
+}
+
+.sentence-copy .sentence-source strong {
+  color: var(--red-dark);
+}
+
+.sentence-play {
+  display: inline-flex;
+  min-width: 78px;
+  min-height: 46px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  align-self: start;
+  border: 0;
+  border-radius: 999px;
+  color: var(--white);
+  background: var(--red-dark);
+  padding: 9px 14px;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.sentence-tokens {
+  display: flex;
+  grid-column: 1 / -1;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.sentence-tokens .token-button {
+  min-width: 58px;
+  min-height: 68px;
+  padding-inline: 8px;
+}
+
+.sentence-tokens .token-char {
+  font-size: 25px;
+}
+
+.negative-groups {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 42px;
+  border-top: 1px solid rgba(16, 26, 38, 0.2);
+}
+
+.negative-group {
+  border-bottom: 1px solid rgba(16, 26, 38, 0.2);
+  padding: 0;
+}
+
+.negative-group > summary {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) 36px;
+  align-items: center;
+  gap: 15px;
+  min-height: 88px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.negative-summary-word {
+  color: var(--ink);
+  font: 650 31px/1 Georgia, "Songti SC", serif;
+}
+
+.negative-summary-word small {
+  display: block;
+  margin-top: 6px;
+  color: var(--red-dark);
+  font: 850 11px/1.2 system-ui, sans-serif;
+}
+
+.negative-group > summary > span:nth-child(2) {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.negative-group-body {
+  display: grid;
+  grid-template-columns: 108px minmax(0, 1fr);
+  gap: 20px;
+  padding: 8px 0 30px;
+}
+
+.negative-group-body > header p {
+  margin: 9px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.negative-word {
+  display: grid;
+  width: 92px;
+  min-height: 92px;
+  place-items: center;
+  border: 1px solid rgba(16, 26, 38, 0.22);
+  border-radius: 50%;
+  color: var(--ink);
+  background: transparent;
+  cursor: pointer;
+}
+
+.negative-word ruby {
+  ruby-position: over;
+}
+
+.negative-word .token-char {
+  font: 650 37px/1 Georgia, "Songti SC", serif;
+}
+
+.negative-word rt {
+  color: var(--red-dark);
+  font-size: 11px;
+  font-weight: 850;
+}
+
+.negative-group .sentence-row {
+  display: block;
+  padding: 16px 0 18px;
+}
+
+.negative-group .sentence-copy h4 {
+  font-size: 21px;
+}
+
+.negative-group .sentence-play {
+  margin-top: 12px;
+}
+
+.negative-group .sentence-tokens {
+  margin-top: 12px;
+}
+
+.negative-group .sentence-tokens .token-button {
+  min-width: 51px;
+  min-height: 61px;
+}
+
+.extra-words-block {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.5fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 36px;
+  margin-top: 54px;
+  background: var(--ink);
+  padding: clamp(24px, 4vw, 42px);
+}
+
+.extra-words-block h3 {
+  margin: 7px 0 0;
+  color: var(--white);
+  font: 600 28px/1.1 Georgia, "Songti SC", serif;
+}
+
+.extra-words-block .micro-label {
+  color: var(--yellow);
+}
+
+.extra-words {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.extra-words .phrase-chip {
+  border-color: rgba(255, 255, 255, 0.18);
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.extra-words .phrase-jyutping {
+  color: var(--yellow);
+}
+
+.extra-words .phrase-meaning {
+  color: rgba(255, 255, 255, 0.58);
+}
+
+.finish-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.finish-actions .button-primary {
+  color: var(--white);
+}
+
+/* 课程目录与课内目录 */
+
+.hero-catalog {
+  min-height: 590px;
+}
+
+.hero-catalog::before {
+  content: "課";
+  right: 0.02em;
+  bottom: -0.22em;
+  font-size: clamp(300px, 39vw, 560px);
+}
+
+.hero-catalog .hero-copy {
+  padding-top: clamp(72px, 11vh, 112px);
+}
+
+.catalog-map {
+  position: absolute;
+  right: max(20px, calc((100% - min(1180px, calc(100% - 40px))) / 2));
+  bottom: 60px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.catalog-map span {
+  display: grid;
+  width: 76px;
+  height: 76px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  color: var(--yellow);
+  background: rgba(255, 255, 255, 0.035);
+  font-weight: 800;
+}
+
+.catalog-map i {
+  width: 34px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.24);
+}
+
+.course-catalog,
+.lesson-outline {
+  width: var(--page);
+  margin-inline: auto;
+  padding: clamp(72px, 9vw, 118px) 0;
+}
+
+.catalog-heading,
+.outline-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(260px, 0.7fr);
+  align-items: end;
+  gap: 38px;
+  margin-bottom: 46px;
+}
+
+.catalog-heading .section-index,
+.outline-heading .section-index {
+  grid-column: 1 / -1;
+}
+
+.catalog-heading h2,
+.outline-heading h2 {
+  margin: -22px 0 0;
+  font: 600 clamp(40px, 5vw, 64px)/1.03 Georgia, "Songti SC", serif;
+  letter-spacing: -0.04em;
+}
+
+.catalog-heading > p:last-child,
+.outline-heading > p:last-child {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.curriculum-tree,
+.lesson-outline > ol,
+.lesson-outline ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.curriculum-tree {
+  position: relative;
+}
+
+.curriculum-tree::before {
+  content: "";
+  position: absolute;
+  top: 46px;
+  bottom: 46px;
+  left: 37px;
+  width: 2px;
+  background: var(--line);
+}
+
+.course-entry {
+  position: relative;
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 28px;
+  min-height: 174px;
+  border-top: 1px solid var(--line);
+  text-decoration: none;
+}
+
+.curriculum-tree li:last-child .course-entry {
+  border-bottom: 1px solid var(--line);
+}
+
+.course-node {
+  z-index: 1;
+  display: grid;
+  width: 76px;
+  height: 76px;
+  place-items: center;
+  border: 2px solid var(--paper);
+  border-radius: 50%;
+  color: var(--ink);
+  background: var(--yellow);
+  font: 700 22px/1 Georgia, serif;
+  box-shadow: 0 0 0 1px var(--line);
+}
+
+.course-copy,
+.course-copy > * {
+  display: block;
+}
+
+.course-copy small {
+  color: var(--red-dark);
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: 0.1em;
+}
+
+.course-copy strong {
+  margin-top: 7px;
+  font: 600 clamp(27px, 3vw, 37px)/1.08 Georgia, "Songti SC", serif;
+}
+
+.course-copy > span {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.course-enter {
+  display: inline-flex;
+  min-height: 46px;
+  align-items: center;
+  gap: 9px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 9px 16px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.course-entry:hover .course-enter,
+.course-entry:focus-visible .course-enter {
+  color: var(--white);
+  border-color: var(--red-dark);
+  background: var(--red-dark);
+}
+
+.catalog-note {
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: 28px;
+  margin-top: 46px;
+  border-left: 5px solid var(--red);
+  background: var(--paper-bright);
+  padding: 24px 30px;
+}
+
+.catalog-note p {
+  margin: 0;
+}
+
+.lesson-outline {
+  scroll-margin-top: 18px;
+}
+
+.lesson-outline > ol {
+  border-top: 1px solid var(--line);
+}
+
+.lesson-outline > ol > li {
+  border-bottom: 1px solid var(--line);
+}
+
+.lesson-outline a[data-module-link] {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) 32px;
+  align-items: center;
+  gap: 17px;
+  min-height: 86px;
+  padding: 14px 4px;
+  text-decoration: none;
+}
+
+.lesson-outline a[data-module-link] > b {
+  color: var(--red-dark);
+  font: 700 18px/1 Georgia, serif;
+}
+
+.lesson-outline a[data-module-link] > span,
+.lesson-outline a[data-module-link] > span > * {
+  display: block;
+}
+
+.lesson-outline a[data-module-link] strong {
+  font-size: 18px;
+}
+
+.lesson-outline a[data-module-link] small {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.lesson-outline a[data-module-link] > i {
+  color: var(--red-dark);
+  font-style: normal;
+  text-align: center;
+}
+
+.lesson-outline a[data-module-link]:hover,
+.lesson-outline a[data-module-link]:focus-visible,
+.lesson-outline a[data-module-link][aria-current="location"] {
+  background: var(--paper-bright);
+}
+
+.outline-branch ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 22px;
+  margin: -4px 0 16px 69px;
+  border-left: 2px solid var(--yellow);
+  padding-left: 18px;
+}
+
+.outline-branch ul a[data-module-link] {
+  display: flex;
+  min-height: 44px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  padding: 9px 4px;
+  font-size: 12px;
+}
+
+.module-back {
+  display: inline-flex;
+  min-height: 46px;
+  align-items: center;
+  margin-top: 42px;
+  border-bottom: 2px solid var(--red-dark);
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.module-back-dark {
+  color: var(--white);
+  border-bottom-color: var(--yellow);
+}
+
 @media (max-width: 900px) {
   :root {
     --page: min(100%, 720px);
@@ -1113,6 +2027,38 @@ a {
     right: 20px;
     bottom: 32px;
     width: min(430px, calc(100% - 40px));
+  }
+
+  .hero-lexicon {
+    right: 20px;
+    bottom: 32px;
+  }
+
+  .catalog-map {
+    right: 20px;
+  }
+
+  .catalog-heading,
+  .outline-heading {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .catalog-heading h2,
+  .outline-heading h2 {
+    margin-top: -22px;
+  }
+
+  .grammar-contrast {
+    grid-template-columns: minmax(120px, 0.35fr) minmax(0, 1fr);
+  }
+
+  .grammar-contrast > p {
+    grid-column: 2;
+  }
+
+  .negative-groups {
+    grid-template-columns: 1fr;
   }
 
   .section-head {
@@ -1169,13 +2115,80 @@ a {
     --radius: 19px;
   }
 
+  .lesson-switcher a {
+    min-height: 44px;
+    padding-inline: 10px;
+    font-size: 10px;
+  }
+
   html {
     scroll-padding-top: 58px;
+    scroll-padding-bottom: calc(150px + env(safe-area-inset-bottom));
+  }
+
+  .audio-open a,
+  .audio-open button,
+  .audio-open select {
+    scroll-margin-bottom: calc(150px + env(safe-area-inset-bottom));
   }
 
   .hero {
     min-height: 720px;
     padding-bottom: 170px;
+  }
+
+  .hero-lesson-two {
+    min-height: 780px;
+    padding-bottom: 205px;
+  }
+
+  .hero-catalog {
+    min-height: 690px;
+    padding-bottom: 160px;
+  }
+
+  .hero-catalog .hero-copy {
+    padding-top: 74px;
+  }
+
+  .catalog-map {
+    right: 20px;
+    bottom: 34px;
+    left: 20px;
+    justify-content: center;
+  }
+
+  .catalog-map span {
+    width: 58px;
+    height: 58px;
+    font-size: 12px;
+  }
+
+  .catalog-map i {
+    width: 22px;
+  }
+
+  .hero-lesson-two .hero-copy {
+    padding-top: 70px;
+  }
+
+  .hero-lexicon {
+    right: 20px;
+    bottom: 34px;
+    left: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 7px;
+  }
+
+  .hero-lexicon > span {
+    width: auto;
+    min-height: 118px;
+    padding: 8px;
+  }
+
+  .hero-lexicon b {
+    font-size: 47px;
   }
 
   .lesson-tag {
@@ -1197,6 +2210,11 @@ a {
 
   .hero h1 {
     font-size: clamp(52px, 16vw, 70px);
+  }
+
+  .hero-lesson-two h1 {
+    font-size: clamp(38px, 11vw, 44px);
+    line-height: 1.04;
   }
 
   .lede {
@@ -1239,6 +2257,187 @@ a {
   .quiz-intro h2,
   .lesson-close h2 {
     font-size: 40px;
+  }
+
+  .course-catalog,
+  .lesson-outline {
+    width: calc(100% - 40px);
+    padding-block: 76px;
+  }
+
+  .catalog-heading,
+  .outline-heading {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    margin-bottom: 34px;
+  }
+
+  .catalog-heading h2,
+  .outline-heading h2 {
+    margin-top: -17px;
+    font-size: 40px;
+  }
+
+  .curriculum-tree::before {
+    left: 28px;
+  }
+
+  .course-entry {
+    grid-template-columns: 58px minmax(0, 1fr);
+    gap: 17px;
+    min-height: 190px;
+    padding-block: 24px;
+  }
+
+  .course-node {
+    width: 58px;
+    height: 58px;
+    font-size: 18px;
+  }
+
+  .course-copy strong {
+    font-size: 27px;
+  }
+
+  .course-enter {
+    grid-column: 2;
+    justify-self: start;
+  }
+
+  .catalog-note {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding-inline: 22px;
+  }
+
+  .lesson-outline a[data-module-link] {
+    grid-template-columns: 40px minmax(0, 1fr) 26px;
+    gap: 12px;
+  }
+
+  .outline-branch ul {
+    grid-template-columns: 1fr;
+    margin-left: 52px;
+  }
+
+  .pronoun-row {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 18px 0;
+  }
+
+  .builder-plus {
+    justify-self: center;
+  }
+
+  .phrase-chip {
+    min-height: 104px;
+    padding: 15px 16px;
+  }
+
+  .phrase-text {
+    font-size: 30px;
+  }
+
+  .correction-strip > div {
+    display: grid;
+    gap: 10px;
+  }
+
+  .demonstrative-parts {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .builder-cross {
+    justify-self: center;
+    transform: rotate(45deg);
+  }
+
+  .demonstrative-grid,
+  .question-word-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .grammar-contrast {
+    grid-template-columns: 1fr;
+    gap: 17px;
+    padding: 30px 0;
+  }
+
+  .grammar-contrast > p {
+    grid-column: auto;
+  }
+
+  .grammar-pair .phrase-chip {
+    min-height: 116px;
+    padding-inline: 12px;
+  }
+
+  .grammar-pair .phrase-text {
+    font-size: 26px;
+  }
+
+  .sentence-group {
+    padding: 0;
+  }
+
+  .sentence-group > summary {
+    grid-template-columns: minmax(0, 1fr) auto 32px;
+    gap: 10px;
+    min-height: 106px;
+  }
+
+  .sentence-group-heading strong {
+    font-size: 23px;
+  }
+
+  .sentence-group-body {
+    padding-bottom: 32px;
+  }
+
+  .sentence-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .sentence-copy h4 {
+    font-size: 25px;
+  }
+
+  .sentence-play {
+    min-width: 70px;
+    padding-inline: 11px;
+  }
+
+  .sentence-tokens .token-button {
+    min-width: 55px;
+  }
+
+  .negative-group {
+    padding: 0;
+  }
+
+  .negative-group-body {
+    grid-template-columns: 82px minmax(0, 1fr);
+    gap: 15px;
+  }
+
+  .negative-word {
+    width: 76px;
+    min-height: 76px;
+  }
+
+  .negative-group .sentence-tokens .token-button {
+    min-width: 48px;
+  }
+
+  .extra-words-block {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .extra-words {
+    grid-template-columns: 1fr;
   }
 
   .tone-board {

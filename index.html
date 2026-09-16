@@ -4,195 +4,87 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#101a26">
-  <meta name="description" content="粤语第一课：用粤拼、声调曲线和即时辨音练习打好发音基础。">
-  <title>粤语声调台 · 第一课</title>
+  <meta name="description" content="杨万的手机粤语课程目录：按课进入，逐字粤拼点读，并配自然整句音频。">
+  <title>粤语练习台 · 课程目录</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <link rel="stylesheet" href="styles.css?v=20260915d">
+  <link rel="stylesheet" href="styles.css?v=20260916c">
 </head>
-<body>
-  <a class="skip-link" href="#lesson">跳到课程内容</a>
+<body data-page="catalog">
+  <a class="skip-link" href="#course-tree">跳到课程目录</a>
 
-  <header class="hero" id="top">
-    <nav class="topbar" aria-label="页面导航">
-      <a class="wordmark" href="#top" aria-label="回到顶部">
+  <header class="hero hero-catalog" id="top">
+    <nav class="topbar" aria-label="课程导航">
+      <a class="wordmark" href="#top" aria-label="回到课程目录顶部">
         <span class="wordmark-mark" aria-hidden="true">粵</span>
-        <span>声调台</span>
+        <span>练习台</span>
       </a>
-      <span class="lesson-tag">第一课 · 发音基础</span>
+      <div class="lesson-switcher" aria-label="快速进入课程">
+        <a href="index.html" aria-current="page">目录</a>
+        <a href="lesson-01.html">01</a>
+        <a href="lesson-02.html">02</a>
+      </div>
     </nav>
 
     <div class="hero-copy">
-      <p class="eyebrow">CANTONESE SOUND LAB · 01</p>
-      <h1>先听见高低，<br><em>再记住数字。</em></h1>
-      <p class="lede">粤语音节 = <strong>声母 onset</strong> + <strong>韵母 final</strong> + <strong>声调 tone</strong>。第一课先抓住六个调型，再处理普通话里没有的收尾。</p>
+      <p class="eyebrow">CANTONESE LEARNING MAP</p>
+      <h1>每一课先看地图，<br><em>再开口练。</em></h1>
+      <p class="lede">首页只做课程导航，不把所有内容塞成长页面。进入课时后，再按章节逐层打开；每个字可点读，整句另听自然语流。</p>
       <div class="hero-actions">
-        <button class="button button-primary audio-trigger" type="button" id="heroSixTone">
-          <span class="play-icon" aria-hidden="true">▶</span>
-          听一遍六调
-        </button>
-        <a class="button button-quiet" href="#baseline">直接做辨音基线</a>
+        <a class="button button-primary" href="#course-tree">查看课程树</a>
+        <a class="button button-quiet" href="lesson-02.html">继续第二课</a>
       </div>
     </div>
 
-    <div class="hero-meter" aria-hidden="true">
-      <span>高</span>
-      <svg viewBox="0 0 360 112" role="img" aria-label="六个声调的相对音高轮廓">
-        <g class="meter-lines">
-          <line x1="0" y1="14" x2="360" y2="14"/>
-          <line x1="0" y1="56" x2="360" y2="56"/>
-          <line x1="0" y1="98" x2="360" y2="98"/>
-        </g>
-        <g class="meter-paths">
-          <path d="M8 14 L50 14"/><path d="M68 56 L110 14"/><path d="M128 56 L170 56"/>
-          <path d="M188 70 L230 98"/><path d="M248 98 L290 56"/><path d="M308 78 L350 78"/>
-        </g>
-      </svg>
-      <span>低</span>
+    <div class="catalog-map" aria-hidden="true">
+      <span>发音</span><i></i><span>代词</span><i></i><span>问句</span>
     </div>
   </header>
 
-  <nav class="chapter-nav" aria-label="本课章节">
-    <a href="#tones">六调</a>
-    <a href="#contrasts">易混对</a>
-    <a href="#checked">入声</a>
-    <a href="#sounds">难点音</a>
-    <a href="#baseline">小测</a>
-  </nav>
+  <main id="course-tree" class="course-catalog" aria-labelledby="catalog-title">
+    <header class="catalog-heading">
+      <p class="section-index">课程目录 / COURSE TREE</p>
+      <h2 id="catalog-title">按课进入，按章节展开</h2>
+      <p>现在有两课。黄色圆点表示已经整理、可以练习；后续课堂内容会继续接在这棵树上。</p>
+    </header>
 
-  <main id="lesson">
-    <section class="section section-paper" id="tones" aria-labelledby="tones-title">
-      <div class="section-head">
-        <div>
-          <p class="section-index">01 / 六调总览</p>
-          <h2 id="tones-title">同一个 <span lang="en">si</span>，只改音高</h2>
-        </div>
-        <p class="section-note">数字写在音节末尾：<strong>si1</strong>。它表示相对音高，不要求你唱到某个绝对音高。</p>
-      </div>
+    <ol class="curriculum-tree">
+      <li>
+        <a class="course-entry" href="lesson-01.html">
+          <span class="course-node" aria-hidden="true">01</span>
+          <span class="course-copy">
+            <small>发音地基 · PRONUNCIATION</small>
+            <strong>六调、入声与辨音</strong>
+            <span>六调 → 易混对 → -p/-t/-k → 难点音 → 10题基线</span>
+          </span>
+          <span class="course-enter">进入课时 <b aria-hidden="true">→</b></span>
+        </a>
+      </li>
+      <li>
+        <a class="course-entry" href="lesson-02.html">
+          <span class="course-node" aria-hidden="true">02</span>
+          <span class="course-copy">
+            <small>开口问清楚 · PRONOUNS & QUESTIONS</small>
+            <strong>代词、问句与否定词</strong>
+            <span>人称 → 这那哪 → 疑问表达 → 易混点 → 22句 → 否定</span>
+          </span>
+          <span class="course-enter">进入课时 <b aria-hidden="true">→</b></span>
+        </a>
+      </li>
+    </ol>
 
-      <div class="tone-board" id="toneBoard" aria-label="六个粤语声调"></div>
-
-      <div class="phrase-panel">
-        <div>
-          <p class="micro-label">逐字可点 · 整组可听</p>
-          <h3>六调阶梯</h3>
-        </div>
-        <button class="round-play audio-trigger" type="button" id="phraseSixTone" aria-label="播放六调阶梯整组">▶</button>
-        <div class="token-line" id="sixTonePhrase"></div>
-      </div>
-
-      <details class="reference-drawer">
-        <summary>为什么有人说“九声六调”？</summary>
-        <p>现代教学通常用 1–6 标六个调型。以 <strong>-p / -t / -k</strong> 结尾的入声音节只出现于 1、3、6 三类音高；传统上把它们另计，因而有“九声”的说法。本课仍统一写 1–6，避免同时背两套编号。</p>
-      </details>
-    </section>
-
-    <section class="section section-ink" id="contrasts" aria-labelledby="contrast-title">
-      <div class="section-head">
-        <div>
-          <p class="section-index">02 / 易混对</p>
-          <h2 id="contrast-title">不要猜单个调，先听差别</h2>
-        </div>
-        <p class="section-note">每次先听 A/B，再分别点字核对。训练顺序是：听 → 选 → 看反馈 → 重听 → 跟读。</p>
-      </div>
-      <div class="contrast-list" id="contrastList"></div>
-    </section>
-
-    <section class="section section-paper" id="checked" aria-labelledby="checked-title">
-      <div class="section-head">
-        <div>
-          <p class="section-index">03 / 入声韵尾</p>
-          <h2 id="checked-title">收住，不爆破，不加元音</h2>
-        </div>
-        <p class="section-note">在粤拼 1–6 中，入声不是三种额外的音高轮廓；它用 <strong>-p / -t / -k</strong> 收尾，通常较短，调号只用 1、3、6。</p>
-      </div>
-      <div class="checked-grid" id="checkedGrid"></div>
-      <aside class="practice-cue">
-        <span class="cue-mark" aria-hidden="true">!</span>
-        <p><strong>自检：</strong>如果你读完还拖着“啊”，说明尾音没有收住。把手放在嘴前，正确的尾音不会像普通话声母 <span lang="en">p/t/k</span> 那样释放并送气。</p>
-      </aside>
-    </section>
-
-    <section class="section section-mist" id="sounds" aria-labelledby="sounds-title">
-      <div class="section-head">
-        <div>
-          <p class="section-index">04 / 普通话母语者难点</p>
-          <h2 id="sounds-title">先会辨认，再追求完整音系</h2>
-        </div>
-        <p class="section-note">第一课只建立听觉地图。点例字听音，不要求一次掌握全部声母和韵母。</p>
-      </div>
-      <div class="sound-groups" id="soundGroups"></div>
-    </section>
-
-    <section class="section section-quiz" id="baseline" aria-labelledby="baseline-title">
-      <div class="quiz-intro" id="quizIntro">
-        <div>
-          <p class="section-index">05 / 个人基线</p>
-          <h2 id="baseline-title">10 题，找出你真正容易混的调</h2>
-          <p>这不是考试，没有统一及格线。系统会记录本机最近一次结果，并告诉你应该先练哪一组。</p>
-        </div>
-        <button class="button button-primary" type="button" id="startQuiz">开始听辨</button>
-        <p class="last-baseline" id="lastBaseline" aria-live="polite"></p>
-      </div>
-
-      <div class="quiz-stage" id="quizStage" hidden>
-        <div class="quiz-progress">
-          <span id="quizProgressText">1 / 10</span>
-          <div class="progress-track" aria-hidden="true"><i id="quizProgressBar"></i></div>
-        </div>
-        <p class="micro-label">先听，再选声调</p>
-        <button class="quiz-listen" type="button" id="quizListen">
-          <span aria-hidden="true">▶</span>
-          播放题目
-        </button>
-        <div class="answer-grid" id="answerGrid"></div>
-        <div class="quiz-feedback" id="quizFeedback" aria-live="polite"></div>
-        <button class="button button-primary next-question" type="button" id="nextQuestion" hidden>下一题</button>
-      </div>
-
-      <div class="quiz-result" id="quizResult" hidden aria-live="polite"></div>
-    </section>
-
-    <section class="section lesson-close" aria-labelledby="finish-title">
-      <p class="section-index">本课完成标准</p>
-      <h2 id="finish-title">你能说清“哪里不同”，就算打好了地基。</h2>
-      <ul>
-        <li>知道粤拼音节由声母、韵母和声调组成。</li>
-        <li>能跟读 <strong>si1–si6</strong>，并听出自己的主要混淆对。</li>
-        <li>知道 <strong>-p / -t / -k</strong> 只收口，不读成额外音节。</li>
-      </ul>
-      <a class="button button-quiet" href="#top">回到顶部再听一遍</a>
-    </section>
+    <aside class="catalog-note">
+      <p class="micro-label">练习顺序</p>
+      <p>先听整句抓语流，再点字核对粤拼；机器音只作跟读起点，细微语气仍以老师或母语者反馈为准。</p>
+    </aside>
   </main>
 
   <footer class="site-footer">
-    <p><strong>标音标准：</strong>LSHK 粤拼 Jyutping 1–6。音频为粤语神经语音生成的练习样音，适合跟读起步，不替代老师或母语者纠音。</p>
+    <p><strong>标音标准：</strong>LSHK 粤拼 Jyutping 1–6。课程内容从课堂材料与个人复习笔记整理，并保留更正与来源边界。</p>
     <p>核音参考：<a href="https://jyutping.org/jyutping/" target="_blank" rel="noreferrer">粤拼方案</a> · <a href="https://words.hk/" target="_blank" rel="noreferrer">粵典</a> · <a href="https://humanum.arts.cuhk.edu.hk/Lexis/lexi-can/" target="_blank" rel="noreferrer">中大审音配词字库</a></p>
   </footer>
 
-  <div class="audio-dock" id="audioDock" hidden>
-    <button class="dock-replay" type="button" id="dockReplay" aria-label="重播">↻</button>
-    <div class="dock-copy">
-      <span class="dock-kicker">NOW PLAYING</span>
-      <strong id="dockLabel" aria-live="polite">练习音频</strong>
-    </div>
-    <label class="speed-label" for="speedSelect">速度</label>
-    <select id="speedSelect" aria-label="播放速度">
-      <option value="0.75">0.75×</option>
-      <option value="1" selected>1×</option>
-      <option value="1.25">1.25×</option>
-    </select>
-    <div class="repeat-control" id="repeatControl" aria-label="重复次数">
-      <button type="button" data-repeat="1" class="is-active" aria-pressed="true">1×</button>
-      <button type="button" data-repeat="3" aria-pressed="false">3×</button>
-    </div>
-    <button class="dock-close" type="button" id="dockClose" aria-label="关闭播放器">×</button>
-  </div>
-
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
-
-  <script src="course.js?v=20260915d"></script>
-  <script src="app.js?v=20260915d"></script>
+  <script src="home.js?v=20260916c"></script>
 </body>
 </html>

@@ -1,10 +1,14 @@
-const CACHE_NAME = "canto-sound-lab-20260915d";
+const CACHE_NAME = "canto-sound-lab-20260916c";
 const SHELL = [
   "./",
   "index.html",
-  "styles.css?v=20260915d",
-  "course.js?v=20260915d",
-  "app.js?v=20260915d",
+  "lesson-01.html",
+  "lesson-02.html",
+  "home.js?v=20260916c",
+  "styles.css?v=20260916c",
+  "course.js?v=20260916c",
+  "lesson-02.js?v=20260916c",
+  "app.js?v=20260916c",
   "manifest.webmanifest",
   "icon.svg",
   "icon-512.png",
@@ -36,20 +40,25 @@ self.addEventListener("fetch", (event) => {
   }
 
   if (request.mode === "navigate") {
+    const navigationKey = url.pathname.endsWith("/lesson-01.html")
+      ? "lesson-01.html"
+      : url.pathname.endsWith("/lesson-02.html")
+        ? "lesson-02.html"
+        : "index.html";
     event.respondWith(
       fetch(request)
         .then(async (response) => {
           if (response.ok) {
             try {
               const cache = await caches.open(CACHE_NAME);
-              await cache.put("index.html", response.clone());
+              await cache.put(navigationKey, response.clone());
             } catch (_) {
               // A cache write failure must not block the online response.
             }
           }
           return response;
         })
-        .catch(() => caches.match("index.html")),
+        .catch(() => caches.match(navigationKey)),
     );
     return;
   }
