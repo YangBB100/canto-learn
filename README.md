@@ -44,6 +44,12 @@
 
 旧版内容可从 Git 提交 `f3a5f05` 回看，不另存重复备份文件。
 
+## 部署
+
+- 当前主仓库：[`YangBB100/canto-learn`](https://github.com/YangBB100/canto-learn)，本地 remote 名为 `origin`。
+- 手机网页：<https://yangbb100.github.io/canto-learn/>，GitHub Pages 从 `main` 分支根目录发布。
+- 旧账号仓库 `wanyanghku/canto-learn` 未删除，本地保留为 `legacy-origin`，仅作历史备份。
+
 ## 发布验收
 
 ### 2026-09-15 · 第一课重做
