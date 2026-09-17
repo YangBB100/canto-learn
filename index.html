@@ -9,7 +9,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <link rel="stylesheet" href="styles.css?v=20260916c">
+  <link rel="stylesheet" href="styles.css?v=20260917c">
 </head>
 <body data-page="catalog">
   <a class="skip-link" href="#course-tree">跳到课程目录</a>
@@ -22,8 +22,9 @@
       </a>
       <div class="lesson-switcher" aria-label="快速进入课程">
         <a href="index.html" aria-current="page">目录</a>
-        <a href="lesson-01.html">01</a>
-        <a href="lesson-02.html">02</a>
+        <a href="lesson-01.html" aria-label="第一课：发音基础">01</a>
+        <a href="lesson-02.html" aria-label="第二课：代词与问句">02</a>
+        <a href="lesson-03.html" aria-label="第三课：动作与状态">03</a>
       </div>
     </nav>
 
@@ -33,12 +34,12 @@
       <p class="lede">首页只做课程导航，不把所有内容塞成长页面。进入课时后，再按章节逐层打开；每个字可点读，整句另听自然语流。</p>
       <div class="hero-actions">
         <a class="button button-primary" href="#course-tree">查看课程树</a>
-        <a class="button button-quiet" href="lesson-02.html">继续第二课</a>
+        <a class="button button-quiet" href="lesson-03.html">继续第三课</a>
       </div>
     </div>
 
     <div class="catalog-map" aria-hidden="true">
-      <span>发音</span><i></i><span>代词</span><i></i><span>问句</span>
+      <span>发音</span><i></i><span>问句</span><i></i><span>动作</span>
     </div>
   </header>
 
@@ -46,7 +47,7 @@
     <header class="catalog-heading">
       <p class="section-index">课程目录 / COURSE TREE</p>
       <h2 id="catalog-title">按课进入，按章节展开</h2>
-      <p>现在有两课。黄色圆点表示已经整理、可以练习；后续课堂内容会继续接在这棵树上。</p>
+      <p>现在有三课。黄色圆点表示已经整理、可以练习；后续课堂内容会继续接在这棵树上。</p>
     </header>
 
     <ol class="curriculum-tree">
@@ -72,6 +73,17 @@
           <span class="course-enter">进入课时 <b aria-hidden="true">→</b></span>
         </a>
       </li>
+      <li>
+        <a class="course-entry" href="lesson-03.html">
+          <span class="course-node" aria-hidden="true">03</span>
+          <span class="course-copy">
+            <small>描述正在发生 · ACTIONS & STATES</small>
+            <strong>进行体、动词与平靚正</strong>
+            <span>搵緊／搵到 → 喺度／緊 → 畀 → 动词方向 → 三种想 → 形容词</span>
+          </span>
+          <span class="course-enter">进入课时 <b aria-hidden="true">→</b></span>
+        </a>
+      </li>
     </ol>
 
     <aside class="catalog-note">
@@ -85,6 +97,6 @@
     <p>核音参考：<a href="https://jyutping.org/jyutping/" target="_blank" rel="noreferrer">粤拼方案</a> · <a href="https://words.hk/" target="_blank" rel="noreferrer">粵典</a> · <a href="https://humanum.arts.cuhk.edu.hk/Lexis/lexi-can/" target="_blank" rel="noreferrer">中大审音配词字库</a></p>
   </footer>
 
-  <script src="home.js?v=20260916c"></script>
+  <script src="home.js?v=20260917c"></script>
 </body>
 </html>

@@ -1,14 +1,16 @@
-const CACHE_NAME = "canto-sound-lab-20260916c";
+const CACHE_NAME = "canto-sound-lab-20260917c";
 const SHELL = [
   "./",
   "index.html",
   "lesson-01.html",
   "lesson-02.html",
-  "home.js?v=20260916c",
-  "styles.css?v=20260916c",
-  "course.js?v=20260916c",
-  "lesson-02.js?v=20260916c",
-  "app.js?v=20260916c",
+  "lesson-03.html",
+  "home.js?v=20260917c",
+  "styles.css?v=20260917c",
+  "course.js?v=20260917c",
+  "lesson-02.js?v=20260917c",
+  "lesson-03.js?v=20260917c",
+  "app.js?v=20260917c",
   "manifest.webmanifest",
   "icon.svg",
   "icon-512.png",
@@ -44,7 +46,9 @@ self.addEventListener("fetch", (event) => {
       ? "lesson-01.html"
       : url.pathname.endsWith("/lesson-02.html")
         ? "lesson-02.html"
-        : "index.html";
+        : url.pathname.endsWith("/lesson-03.html")
+          ? "lesson-03.html"
+          : "index.html";
     event.respondWith(
       fetch(request)
         .then(async (response) => {

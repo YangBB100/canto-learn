@@ -257,11 +257,12 @@
       </button>`;
   }
 
-  function renderSentenceRow(item, compact = false) {
+  function renderSentenceRow(item, compact = false, headingLevel = 4) {
+    const headingTag = headingLevel === 3 ? "h3" : "h4";
     return `
       <article class="sentence-row${compact ? " sentence-row-compact" : ""}" data-sentence-id="${escapeHtml(item.id)}">
         <div class="sentence-copy">
-          <h4>${escapeHtml(item.text)}</h4>
+          <${headingTag}>${escapeHtml(item.text)}</${headingTag}>
           <p>${escapeHtml(item.meaning)}</p>
           ${item.sourceOriginal ? `<p class="sentence-source"><strong>课堂原写：</strong>${escapeHtml(item.sourceOriginal)}</p>` : ""}
         </div>
@@ -337,6 +338,77 @@
       </details>`).join("");
 
     byId("extraWords").innerHTML = course.extraWords.map((item) => phraseCard(item, "phrase-chip phrase-chip-dark")).join("");
+  }
+
+  function renderWordFamily(group, dark = false) {
+    const chipClass = dark ? "phrase-chip phrase-chip-dark" : "phrase-chip";
+    return `
+      <details class="word-family${dark ? " word-family-dark" : ""}" id="${escapeHtml(group.id)}">
+        <summary>
+          <span class="word-family-key">${escapeHtml(group.word.text)} <small>${escapeHtml(group.word.jyutping)}</small></span>
+          <span>${escapeHtml(group.word.meaning)}</span>
+          <i aria-hidden="true">＋</i>
+        </summary>
+        <div class="word-family-body">
+          <div class="word-family-lead">
+            ${phraseCard(group.word, chipClass)}
+            <p>${escapeHtml(group.note)}</p>
+          </div>
+          <div class="word-family-examples">
+            ${group.examples.map((item) => phraseCard(item, chipClass)).join("")}
+          </div>
+        </div>
+      </details>`;
+  }
+
+  function setupExclusiveDetails(container) {
+    if (!container) return;
+    const items = [...container.children].filter((item) => item.tagName === "DETAILS");
+    items.forEach((item) => {
+      item.addEventListener("toggle", () => {
+        if (!item.open) return;
+        items.forEach((other) => {
+          if (other !== item) other.open = false;
+        });
+      });
+    });
+  }
+
+  function renderLessonThree() {
+    byId("searchSentences").innerHTML = course.searchSentences.map((item) => renderSentenceRow(item, false, 3)).join("");
+    byId("aspectParts").innerHTML = course.aspectParts.map((item) => phraseCard(item)).join("");
+    byId("progressiveGroups").innerHTML = course.progressiveGroups.map((group, index) => `
+      <details class="sentence-group" id="${escapeHtml(group.id)}">
+        <summary>
+          <span class="sentence-group-heading">
+            <span class="micro-label">结构 ${String(index + 1).padStart(2, "0")}</span>
+            <strong>${escapeHtml(group.title)}</strong>
+            <small>${escapeHtml(group.description)}</small>
+          </span>
+          <b>${group.sentences.length} 句</b>
+          <i aria-hidden="true">＋</i>
+        </summary>
+        <div class="sentence-group-body">
+          <h3 class="sr-only">${escapeHtml(group.title)}</h3>
+          ${group.sentences.map((item) => renderSentenceRow(item)).join("")}
+        </div>
+      </details>`).join("");
+    byId("giveSentences").innerHTML = course.giveSentences.map((item) => renderSentenceRow(item, false, 3)).join("");
+    byId("directionSentences").innerHTML = course.directionSentences.map((item) => renderSentenceRow(item, false, 3)).join("");
+    byId("verbFamilies").innerHTML = course.verbFamilies.map((group) => renderWordFamily(group, true)).join("");
+    byId("thoughtContrasts").innerHTML = course.thoughtContrasts.map((item) => `
+      <article class="thought-card">
+        <h3 class="sr-only">${escapeHtml(item.word.text)}</h3>
+        ${phraseCard(item.word)}
+        <p class="thought-english">${escapeHtml(item.english)}</p>
+        <p>${escapeHtml(item.note)}</p>
+        <div class="thought-example">${renderSentenceRow(item.example, true)}</div>
+      </article>`).join("");
+    byId("adjectiveFamilies").innerHTML = course.adjectiveFamilies.map((group) => renderWordFamily(group)).join("");
+    byId("adjectiveSentences").innerHTML = course.adjectiveSentences.map((item) => renderSentenceRow(item, false, 3)).join("");
+    setupExclusiveDetails(byId("progressiveGroups"));
+    setupExclusiveDetails(byId("verbFamilies"));
+    setupExclusiveDetails(byId("adjectiveFamilies"));
   }
 
   function setupLessonNavigation() {
@@ -612,6 +684,9 @@
     setupLessonNavigation();
   } else if (course.meta.id === "lesson-02-pronouns-questions") {
     renderLessonTwo();
+    setupLessonNavigation();
+  } else if (course.meta.id === "lesson-03-actions-progressive") {
+    renderLessonThree();
     setupLessonNavigation();
   }
 
